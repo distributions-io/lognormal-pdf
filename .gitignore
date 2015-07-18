@@ -3,6 +3,7 @@
 ###############
 reports/
 build/
+test/json/
 
 # Compiled source #
 ###################

@@ -20,15 +20,20 @@ var expect = chai.expect,
 
 describe( 'number pdf', function tests() {
 
-	var mu = 0,
-		sigma = 1;
+	var	validationData = require( './json/accessor.json' ),
+		data = validationData.data,
+		expected = validationData.expected,
+		mu = validationData.mu,
+		sigma = validationData.sigma;
 
 	it( 'should export a function', function test() {
 		expect( pdf ).to.be.a( 'function' );
 	});
 
 	it( 'should evaluate the Lognormal probability density function', function test() {
-		assert.closeTo( pdf( 2, mu, sigma ),  , 1e-4 );
+		for ( var i = 0; i < data.length; i++ ) {
+			assert.closeTo( pdf( data[ i ], mu, sigma ), expected[ i ] , 1e-14 );
+		}
 	});
 
 });

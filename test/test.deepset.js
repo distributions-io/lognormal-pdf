@@ -20,8 +20,9 @@ var expect = chai.expect,
 
 describe( 'deepset pdf', function tests() {
 
-	var mu = 0,
-		sigma = 1;
+	var validationData = require( './json/deepset.json' ),
+		mu = validationData.mu,
+		sigma = validationData.sigma;
 
 	it( 'should export a function', function test() {
 		expect( pdf ).to.be.a( 'function' );
@@ -30,44 +31,32 @@ describe( 'deepset pdf', function tests() {
 	it( 'should compute the Lognormal pdf and deep set', function test() {
 		var data, expected, i;
 
-		data = [
-			{'x':-3},
-			{'x':-2},
-			{'x':-1},
-			{'x':0},
-			{'x':1},
-			{'x':2},
-			{'x':3}
-		];
+		data = validationData.data.map( function( e ) {
+			return {'x': e};
+		});
 
 		data = pdf( data, mu, sigma, 'x' );
 
-		expected = [
-
-		];
+		expected = validationData.expected.map( function( e ) {
+			return {'x': e};
+		});
 
 		for ( i = 0; i < data.length; i++ ) {
-			assert.closeTo( data[ i ].x, expected[ i ].x, 1e-7 );
+			assert.closeTo( data[ i ].x, expected[ i ].x, 1e-14 );
 		}
 
 		// Custom separator...
-		data = [
-			{'x':[9,-3]},
-			{'x':[9,-2]},
-			{'x':[9,-1]},
-			{'x':[9,0]},
-			{'x':[9,1]},
-			{'x':[9,2]},
-			{'x':[9,3]}
-		];
+		data = validationData.data.map( function( e ) {
+			return {'x': [9, e]};
+		});
 
 		data = pdf( data, mu, sigma, 'x/1', '/' );
-		expected = [
-
-		];
+		expected = validationData.expected.map( function( e ) {
+			return {'x': [9, e]};
+		});
 
 		for ( i = 0; i < data.length; i++ ) {
-			assert.closeTo( data[ i ].x[ 1 ], expected[ i ].x[ 1 ], 1e-7, 'custom separator' );
+			assert.closeTo( data[ i ].x[ 1 ], expected[ i ].x[ 1 ], 1e-14, 'custom separator' );
 		}
 	});
 

@@ -20,8 +20,9 @@ var expect = chai.expect,
 
 describe( 'typed-array pdf', function tests() {
 
-	var mu = 0,
-		sigma = 1;
+	var validationData = require( './json/typedarray.json' ),
+		mu = validationData.mu,
+		sigma = validationData.sigma;
 
 	it( 'should export a function', function test() {
 		expect( pdf ).to.be.a( 'function' );
@@ -30,33 +31,18 @@ describe( 'typed-array pdf', function tests() {
 	it( 'should evaluate the Lognormal pdf', function test() {
 		var data, actual, expected, i;
 
-		data = new Float64Array([
-			1e-306,
-			-1e-306,
-			1e-299,
-			-1e-299,
-			0.8,
-			-0.8,
-			1,
-			-1,
-			10,
-			-10,
-			2,
-			-2,
-			3,
-			-3
-		]);
+		data = validationData.data;
+		data = new Float64Array( data );
+
 		actual = new Float64Array( data.length );
 
 		actual = pdf( actual, data, mu, sigma );
 
-		// Evaluated on Wolfram Alpha:
-		expected = new Float64Array([
-
-		]);
+		expected = validationData.expected;
+		expected = new Float64Array( expected );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ], expected[ i ], 1e-7 );
+			assert.closeTo( actual[ i ], expected[ i ], 1e-14 );
 		}
 	});
 

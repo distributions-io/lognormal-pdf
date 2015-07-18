@@ -20,8 +20,10 @@ var expect = chai.expect,
 
 describe( 'accessor pdf', function tests() {
 
-	var mu = 0,
-		sigma = 1;
+	var validationData = require( './json/accessor.json' );
+
+	var mu = validationData.mu,
+		sigma = validationData.sigma;
 
 	it( 'should export a function', function test() {
 		expect( pdf ).to.be.a( 'function' );
@@ -30,25 +32,18 @@ describe( 'accessor pdf', function tests() {
 	it( 'should evaluate the Lognormal pdf using an accessor', function test() {
 		var data, actual, expected, i;
 
-		data = [
-			{'x':-3},
-			{'x':-2},
-			{'x':-1},
-			{'x':0},
-			{'x':1},
-			{'x':2},
-			{'x':3}
-		];
+		data = validationData.data.map( function( e ) {
+			return {'x': e};
+		});
+
 		actual = new Array( data.length );
 
 		actual = pdf( actual, data, mu, sigma,getValue );
 
-		expected = [
-
-		];
+		expected = validationData.expected;
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ], expected[ i ], 1e-7 );
+			assert.closeTo( actual[ i ], expected[ i ], 1e-14 );
 		}
 
 		function getValue( d ) {

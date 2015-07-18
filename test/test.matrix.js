@@ -10,10 +10,7 @@ var // Expectation library:
 	matrix = require( 'dstructs-matrix' ),
 
 	// Module to be tested:
-	pdf = require( './../lib/matrix.js' ),
-
-	// Error function:
-	PDF = require( './../lib/number.js' );
+	pdf = require( './../lib/matrix.js' );
 
 
 // VARIABLES //
@@ -26,20 +23,16 @@ var expect = chai.expect,
 
 describe( 'matrix pdf', function tests() {
 
-	var mu = 0,
-		sigma = 1,
+	var validationData = require( './json/matrix.json' ),
+		mu = validationData.mu,
+		sigma = validationData.sigma,
 		out,
 		mat,
 		d1,
-		d2,
-		i;
+		d2;
 
-	d1 = new Float64Array( 25 );
-	d2 = new Float64Array( 25 );
-	for ( i = 0; i < d1.length; i++ ) {
-		d1[ i ] = i / 5;
-		d2[ i ] = PDF( i / 5, mu, sigma );
-	}
+	d1 = new Float64Array( validationData.data );
+	d2 = new Float64Array( validationData.expected );
 
 	beforeEach( function before() {
 		mat = matrix( d1, [5,5], 'float64' );
@@ -58,12 +51,14 @@ describe( 'matrix pdf', function tests() {
 	});
 
 	it( 'should evaluate the Lognormal pdf for each matrix element', function test() {
-		var actual;
+		var actual, i;
 
 		actual = matrix( [5,5], 'float64' );
 		actual = pdf( actual, mat, mu, sigma );
 
-		assert.deepEqual( actual.data, out.data );
+		for ( i = 0; i < actual.length; i++ ) {
+			assert.closeTo( actual.data[ i ], out.data[ i], 1e-14 );
+		}
 	});
 
 	it( 'should return an empty matrix if provided an empty matrix', function test() {

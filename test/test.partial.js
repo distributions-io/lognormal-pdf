@@ -20,8 +20,11 @@ var expect = chai.expect,
 
 describe( 'number pdf', function tests() {
 
-	var mu = 0,
-		sigma = 1;
+	var	validationData = require( './json/accessor.json' ),
+		data = validationData.data,
+		expected = validationData.expected,
+		mu = validationData.mu,
+		sigma = validationData.sigma;
 
 	it( 'should export a function', function test() {
 		expect( partial ).to.be.a( 'function' );
@@ -32,5 +35,15 @@ describe( 'number pdf', function tests() {
 		pdf = partial( mu, sigma);
 		expect( pdf ).to.be.a( 'function' );
 	});
+
+
+	it( 'should return a function which evaluates the probability density function', function test() {
+		var pdf;
+		pdf = partial( mu, sigma);
+		for ( var i = 0; i < data.length; i++ ) {
+			assert.closeTo( pdf( data[ i ] ), expected[ i ] , 1e-14 );
+		}
+	});
+
 
 });

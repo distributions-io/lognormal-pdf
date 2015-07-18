@@ -13,10 +13,7 @@ var // Expectation library:
 	isnan = require( 'validate.io-nan' ),
 
 	// Module to be tested:
-	pdf = require( './../lib' ),
-
-	// Error function:
-	PDF = require( './../lib/number.js' );
+	pdf = require( './../lib' );
 
 
 // VARIABLES //
@@ -132,68 +129,80 @@ describe( 'distributions-lognormal-pdf', function tests() {
 	});
 
 	it( 'should evaluate the Lognormal pdf when provided a plain array', function test() {
-		var data, actual, expected, i;
 
-		data = [ -3, -2, -1, 0, 1, 2, 3 ];
-		expected = [
+		var validationData = require( './json/array.json' ),
+			data,
+			actual,
+			expected,
+			i;
 
-		];
+		data = validationData.data;
+		expected = validationData.expected;
 
-		actual = pdf( data );
+		actual = pdf( data, {
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
+		});
 		assert.notEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ], expected[ i ], 1e-7 );
+			assert.closeTo( actual[ i ], expected[ i ], 1e-14 );
 		}
 
 		// Mutate...
 		actual = pdf( data, {
-			'copy': false
+			'copy': false,
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
 		});
 		assert.strictEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( data[ i ], expected[ i ], 1e-7 );
+			assert.closeTo( data[ i ], expected[ i ], 1e-14 );
 		}
 	});
 
 	it( 'should evaluate the Lognormal pdf when provided a typed array', function test() {
-		var data, actual, expected, i;
+		var validationData = require( './json/typedarray.json' ),
+			data,
+			actual,
+			expected,
+			i;
 
-		data = new Int8Array( [ -3, -2, -1, 0, 1, 2, 3 ] );
+		data = new Float64Array( validationData.data );
 
-		expected = new Float64Array([
+		expected = new Float64Array( validationData.expected );
 
-		]);
-
-		actual = pdf( data );
+		actual = pdf( data, {
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
+		});
 		assert.notEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ], expected[ i ], 1e-7 );
+			assert.closeTo( actual[ i ], expected[ i ], 1e-14 );
 		}
 
 		// Mutate:
 		actual = pdf( data, {
-			'copy': false
+			'copy': false,
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
 		});
-		expected = new Int8Array([
-
-		]);
+		expected = new Float64Array( validationData.expected );
 		assert.strictEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( data[ i ], expected[ i ], 1e-7 );
+			assert.closeTo( data[ i ], expected[ i ], 1e-14 );
 		}
 	});
 
 	it( 'should evaluate the Lognormal pdf element-wise and return an array of a specific type', function test() {
-		var data, actual, expected;
 
-		data = [ -3, -2, -1, 0, 1, 2, 3 ];
-		expected = new Int8Array([
-
-		]);
+		var validationData = require( './json/array.json' ),
+			data = validationData.data,
+			actual,
+			expected = new Int8Array( validationData.expected );
 
 		actual = pdf( data, {
 			'dtype': 'int8'
@@ -205,40 +214,40 @@ describe( 'distributions-lognormal-pdf', function tests() {
 	});
 
 	it( 'should evaluate the Lognormal pdf element-wise using an accessor', function test() {
-		var data, actual, expected, i;
+		var validationData = require( './json/accessor.json' ),
+			data,
+			actual,
+			expected,
+			i;
 
-		data = [
-			[0,-3],
-			[1,-2],
-			[2,-1],
-			[3,0],
-			[4,1],
-			[5,2],
-			[6,3]
-		];
+		data = validationData.data.map( function( e, i ) {
+			return [ i, e ];
+		});
 
-		expected = [
-
-		];
+		expected = validationData.expected;
 
 		actual = pdf( data, {
-			'accessor': getValue
+			'accessor': getValue,
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
 		});
 		assert.notEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ], expected[ i ], 1e-7 );
+			assert.closeTo( actual[ i ], expected[ i ], 1e-14 );
 		}
 
 		// Mutate:
 		actual = pdf( data, {
 			'accessor': getValue,
-			'copy': false
+			'copy': false,
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
 		});
 		assert.strictEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( data[ i ], expected[ i ], 1e-7 );
+			assert.closeTo( data[ i ], expected[ i ], 1e-14 );
 		}
 
 		function getValue( d ) {
@@ -247,98 +256,104 @@ describe( 'distributions-lognormal-pdf', function tests() {
 	});
 
 	it( 'should evaluate the Lognormal pdf element-wise and deep set', function test() {
-		var data, actual, expected, i;
+		var validationData = require( './json/deepset.json' ),
+			data,
+			actual,
+			expected,
+			i;
 
-		data = [
-			{'x':[0,-3]},
-			{'x':[1,-2]},
-			{'x':[2,-1]},
-			{'x':[3,0]},
-			{'x':[4,1]},
-			{'x':[5,2]},
-			{'x':[6,3]}
-		];
-		expected = [
+		data = validationData.data.map( function( e ) {
+			return {'x': [ i, e ]};
+		});
 
-		];
+		expected = validationData.expected.map( function( e ) {
+			return {'x': [ i, e ]};
+		});
 
 		actual = pdf( data, {
-			'path': 'x.1'
+			'path': 'x.1',
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
 		});
 
 		assert.strictEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( data[ i ].x[ 1 ], expected[ i ].x[ 1 ], 1e-7 );
+			assert.closeTo( data[ i ].x[ 1 ], expected[ i ].x[ 1 ], 1e-14 );
 		}
 
 		// Specify a path with a custom separator...
-		data = [
-			{'x':[0,-3]},
-			{'x':[1,-2]},
-			{'x':[2,-1]},
-			{'x':[3,0]},
-			{'x':[4,1]},
-			{'x':[5,2]},
-			{'x':[6,3]}
-		];
+		data = validationData.data.map( function( e ) {
+			return {'x': [ i, e ]};
+		});
 		actual = pdf( data, {
 			'path': 'x/1',
-			'sep': '/'
+			'sep': '/',
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
 		});
 		assert.strictEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ].x[ 1 ], expected[ i ].x[ 1 ], 1e-7 );
+			assert.closeTo( actual[ i ].x[ 1 ], expected[ i ].x[ 1 ], 1e-14 );
 		}
 	});
 
 	it( 'should evaluate the Lognormal pdf element-wise when provided a matrix', function test() {
-		var mat,
+		var validationData = require( './json/matrix.json' ),
+			mat,
 			out,
 			d1,
 			d2,
 			i;
 
-		d1 = new Float64Array( 25 );
-		d2 = new Float64Array( 25 );
-		for ( i = 0; i < d1.length; i++ ) {
-			d1[ i ] = i / 5;
-			d2[ i ] = PDF( i / 5 );
-		}
-		mat = matrix( d1, [5,5], 'float64' );
-		out = pdf( mat );
+		d1 = new Float64Array( validationData.data );
+		d2 = new Float64Array( validationData.expected );
 
-		assert.deepEqual( out.data, d2 );
+		mat = matrix( d1, [5,5], 'float64' );
+		out = pdf( mat, {
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
+		});
+
+		for ( i = 0; i < out.length; i++ ) {
+			assert.closeTo( out.data[ i ], d2[ i], 1e-14 );
+		}
 
 		// Mutate...
 		out = pdf( mat, {
-			'copy': false
+			'copy': false,
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
 		});
 		assert.strictEqual( mat, out );
-		assert.deepEqual( mat.data, d2 );
+		for ( i = 0; i < out.length; i++ ) {
+			assert.closeTo( mat.data[ i ], d2[ i], 1e-14 );
+		}
 	});
 
 	it( 'should evaluate the Lognormal pdf element-wise and return a matrix of a specific type', function test() {
-		var mat,
+		var validationData = require( './json/matrix.json' ),
+			mat,
 			out,
 			d1,
 			d2,
 			i;
 
-		d1 = new Float64Array( 25 );
-		d2 = new Float32Array( 25 );
-		for ( i = 0; i < d1.length; i++ ) {
-			d1[ i ] = i / 5;
-			d2[ i ] = PDF( i / 5 );
-		}
+		d1 = new Float64Array( validationData.data );
+		d2 = new Float32Array( validationData.expected );
+
 		mat = matrix( d1, [5,5], 'float64' );
 		out = pdf( mat, {
-			'dtype': 'float32'
+			'dtype': 'float32',
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
 		});
 
 		assert.strictEqual( out.dtype, 'float32' );
-		assert.deepEqual( out.data, d2 );
+		for ( i = 0; i < out.length; i++ ) {
+			assert.closeTo( out.data[ i ], d2[ i], 1e-14 );
+		}
 	});
 
 	it( 'should return an empty data structure if provided an empty data structure', function test() {
