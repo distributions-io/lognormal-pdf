@@ -6,12 +6,13 @@ Probability Density Function
 
 The [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) (PDF) for a [Lognormal](https://en.wikipedia.org/wiki/Lognormal_distribution) random variable is
 
-<div class="equation" align="center" data-raw-text="" data-equation="eq:pdf_function">
-	<img src="" alt="Probability density function (PDF) for a Lognormal distribution.">
+<div class="equation" align="center" data-raw-text="f(x;\mu,\sigma) = \frac{1}{x\sqrt{2\pi\sigma^2}} e^{-\frac{\left(\ln x-\mu\right)^2}{2\sigma^2}}" data-equation="eq:pdf_function">
+	<img src="https://cdn.rawgit.com/distributions-io/lognormal-pdf/c1d82cb66e4000ee374d7d4aa9f9c41e36d58d48/docs/img/eqn.svg" alt="Probability density function (PDF) for a Lognormal distribution.">
 	<br>
 </div>
 
-where `mu` is the location parameter and `sigma` is the scale parameter.
+where `mu` is the location parameter and `sigma` is the scale parameter. According to the definition, the *natural logarithm* of a random variable from a
+[Lognormal distribution](https://en.wikipedia.org/wiki/Lognormal_distribution) follows a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution).
 
 ## Installation
 

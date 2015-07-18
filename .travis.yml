@@ -10,6 +10,6 @@ before_install:
   - sudo apt-get install r-base
   - wget https://cran.r-project.org/src/contrib/Archive/jsonlite/jsonlite_0.9.15.tar.gz
   - sudo R CMD INSTALL jsonlite_0.9.15.tar.gz
+  - Rscript ./test/runner.R
 after_script:
   - npm run coveralls
-  - Rscript ./test/runner.R
