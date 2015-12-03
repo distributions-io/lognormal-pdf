@@ -1,18 +1,18 @@
 Probability Density Function
 ===
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][codecov-image]][codecov-url] [![Dependencies][dependencies-image]][dependencies-url]
 
 > [Lognormal](https://en.wikipedia.org/wiki/Lognormal_distribution) distribution probability density function (PDF).
 
-The [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) (PDF) for a [Lognormal](https://en.wikipedia.org/wiki/Lognormal_distribution) random variable is
+The [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) (PDF) for a [lognormal](https://en.wikipedia.org/wiki/Lognormal_distribution) random variable is
 
 <div class="equation" align="center" data-raw-text="f(x;\mu,\sigma) = \frac{1}{x\sqrt{2\pi\sigma^2}} e^{-\frac{\left(\ln x-\mu\right)^2}{2\sigma^2}}" data-equation="eq:pdf_function">
-	<img src="https://cdn.rawgit.com/distributions-io/lognormal-pdf/c1d82cb66e4000ee374d7d4aa9f9c41e36d58d48/docs/img/eqn.svg" alt="Probability density function (PDF) for a Lognormal distribution.">
+	<img src="https://cdn.rawgit.com/distributions-io/lognormal-pdf/c1d82cb66e4000ee374d7d4aa9f9c41e36d58d48/docs/img/eqn.svg" alt="Probability density function (PDF) for a lognormal distribution.">
 	<br>
 </div>
 
-where `mu` is the location parameter and `sigma` is the scale parameter. According to the definition, the *natural logarithm* of a random variable from a
-[Lognormal distribution](https://en.wikipedia.org/wiki/Lognormal_distribution) follows a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution).
+where `mu` is the location parameter and `sigma > 0` is the scale parameter. According to the definition, the *natural logarithm* of a random variable from a
+[lognormal distribution](https://en.wikipedia.org/wiki/Lognormal_distribution) follows a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution).
 
 ## Installation
 
@@ -31,7 +31,7 @@ var pdf = require( 'distributions-lognormal-pdf' );
 
 #### pdf( x[, options] )
 
-Evaluates the [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) (PDF) for the [Lognormal](https://en.wikipedia.org/wiki/Lognormal_distribution) distribution. `x` may be either a [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays), or a [`matrix`](https://github.com/dstructs/matrix).
+Evaluates the [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) (PDF) for the [lognormal](https://en.wikipedia.org/wiki/Lognormal_distribution) distribution. `x` may be either a [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays), or a [`matrix`](https://github.com/dstructs/matrix).
 
 ``` javascript
 var matrix = require( 'dstructs-matrix' ),
@@ -41,18 +41,18 @@ var matrix = require( 'dstructs-matrix' ),
 	i;
 
 out = pdf( 1 );
-// returns
+// returns 0.399
 
 out = pdf( -1 );
 // returns 0
 
 x = [ 0, 0.5, 1, 1.5, 2, 2.5 ];
 out = pdf( x );
-// returns [...]
+// returns [ 0, ~0.627, ~0.399, ~0.245, ~0.157, ~0.105 ]
 
 x = new Int8Array( x );
 out = pdf( x );
-// returns Float64Array( [...] )
+// returns Float64Array( [0,0,~0.399,~0.399,~0.157,~0.157] )
 
 x = new Float32Array( 6 );
 for ( i = 0; i < 6; i++ ) {
@@ -67,10 +67,11 @@ mat = matrix( x, [3,2], 'float32' );
 
 out = pdf( mat );
 /*
-	[
-
-	   ]
+	[ 0 ~0.627
+	  ~0.399 ~0.245
+	  ~0.157 ~0.105 ]
 */
+
 ```
 
 The function accepts the following `options`:
@@ -83,7 +84,7 @@ The function accepts the following `options`:
 *	__path__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path.
 *	__sep__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path separator. Default: `'.'`.
 
-A [Lognormal](https://en.wikipedia.org/wiki/Lognormal_distribution) distribution is a function of 2 parameter(s): `mu`(location parameter) and `sigma`(scale parameter). By default, `mu` is equal to `0` and `sigma` is equal to `1`. To adjust either parameter, set the corresponding option(s).
+A [Lognormal](https://en.wikipedia.org/wiki/Lognormal_distribution) distribution is a function of two parameters: `mu`(location parameter) and `sigma > 0`(scale parameter). By default, `mu` is equal to `0` and `sigma` is equal to `1`. To adjust either parameter, set the corresponding option.
 
 ``` javascript
 var x = [ 0, 0.5, 1, 1.5, 2, 2.5 ];
@@ -92,7 +93,8 @@ var out = pdf( x, {
 	'mu': 8,
 	'sigma': 2,
 });
-// returns [...]
+// returns [ 0, 0, 0, 0, 0, 0 ]
+
 ```
 
 For non-numeric `arrays`, provide an accessor `function` for accessing `array` values.
@@ -114,7 +116,8 @@ function getValue( d, i ) {
 var out = pdf( data, {
 	'accessor': getValue
 });
-// returns [...]
+// returns [ 0, ~0.627, ~0.399, ~0.245, ~0.157, ~0.105 ]
+
 ```
 
 
@@ -136,12 +139,12 @@ var out = pdf( data, {
 });
 /*
 	[
-		{'x':[0,]},
-		{'x':[1,]},
-		{'x':[2,]},
-		{'x':[3,]},
-		{'x':[4,]},
-		{'x':[5,]}
+		{'x':[0,0]},
+		{'x':[1,~0.627]},
+		{'x':[2,~0.399]},
+		{'x':[3,~0.245]},
+		{'x':[4,~0.157]},
+		{'x':[5,~0.105]}
 	]
 */
 
@@ -159,13 +162,14 @@ x = new Int8Array( [0,1,2,3,4] );
 out = pdf( x, {
 	'dtype': 'int32'
 });
-// returns Int32Array( [...] )
+// returns Int32Array( [0,0,0,0,0] )
 
 // Works for plain arrays, as well...
 out = pdf( [0,0.5,1,1.5,2], {
 	'dtype': 'uint8'
 });
-// returns Uint8Array( [...] )
+// returns Uint8Array( [0,0,0,0,0] )
+
 ```
 
 By default, the function returns a new data structure. To mutate the input data structure (e.g., when input values can be discarded or when optimizing memory usage), set the `copy` option to `false`.
@@ -182,7 +186,7 @@ x = [ 0, 0.5, 1, 1.5, 2 ];
 out = pdf( x, {
 	'copy': false
 });
-// returns [...]
+// returns [ 0, ~0.627, ~0.399, ~0.245, ~0.157 ]
 
 bool = ( x === out );
 // returns true
@@ -202,9 +206,9 @@ out = pdf( mat, {
 	'copy': false
 });
 /*
-	[
-
-	   ]
+	[ 0 ~0.627
+	  ~0.399 ~0.245
+	  ~0.157 ~0.105 ]
 */
 
 bool = ( mat === out );
@@ -381,8 +385,8 @@ Copyright &copy; 2015. The [Compute.io](https://github.com/compute-io) Authors.
 [travis-image]: http://img.shields.io/travis/distributions-io/lognormal-pdf/master.svg
 [travis-url]: https://travis-ci.org/distributions-io/lognormal-pdf
 
-[coveralls-image]: https://img.shields.io/coveralls/distributions-io/lognormal-pdf/master.svg
-[coveralls-url]: https://coveralls.io/r/distributions-io/lognormal-pdf?branch=master
+[codecov-image]: https://img.shields.io/codecov/c/github/distributions-io/lognormal-pdf/master.svg
+[codecov-url]: https://codecov.io/github/distributions-io/lognormal-pdf?branch=master
 
 [dependencies-image]: http://img.shields.io/david/distributions-io/lognormal-pdf.svg
 [dependencies-url]: https://david-dm.org/distributions-io/lognormal-pdf

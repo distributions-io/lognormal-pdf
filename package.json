@@ -1,7 +1,7 @@
 {
   "name": "distributions-lognormal-pdf",
   "version": "0.0.0",
-  "description": "Lognormal  distribution probability density function (PDF)",
+  "description": "Lognormal distribution probability density function (PDF)",
   "author": {
     "name": "Philipp Burckhardt",
     "email": "pburckhardt@outlook.com"
@@ -13,27 +13,34 @@
     }
   ],
   "scripts": {
-    "test": "./node_modules/.bin/mocha",
-    "test-cov": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --dir ./reports/coverage -- -R spec",
-    "coveralls": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --dir ./reports/coveralls/coverage --report lcovonly -- -R spec && cat ./reports/coveralls/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./reports/coveralls"
+    "test": "mocha",
+    "test-cov": "istanbul cover ./node_modules/.bin/_mocha --dir ./reports/coverage -- -R spec",
+    "codecov": "istanbul cover ./node_modules/.bin/_mocha --dir ./reports/codecov/coverage --report lcovonly -- -R spec && cat ./reports/codecov/coverage/lcov.info | codecov && rm -rf ./reports/codecov"
   },
   "main": "./lib",
   "repository": {
     "type": "git",
-    "url": "git://github.com/compute-io/lognormal-pdf.git"
+    "url": "git://github.com/distributions-io/lognormal-pdf.git"
   },
   "keywords": [
     "distributions.io",
     "distributions",
+    "distribution",
+    "log",
+    "normal",
+    "gaussian",
     "probability",
     "statistics",
     "stats",
-    "pdf"
+    "pdf",
+    "density function",
+    "density"
   ],
   "bugs": {
-    "url": "https://github.com/compute-io/lognormal-pdf/issues"
+    "url": "https://github.com/distributions-io/lognormal-pdf/issues"
   },
   "dependencies": {
+    "codecov": "^1.0.1",
     "compute-array-constructors": "^1.0.0",
     "dstructs-matrix": "^2.0.0",
     "utils-deep-get": "^1.0.0",
@@ -53,7 +60,6 @@
   "devDependencies": {
     "chai": "3.x.x",
     "mocha": "2.x.x",
-    "coveralls": "^2.11.1",
     "istanbul": "^0.3.0",
     "jshint": "2.x.x",
     "jshint-stylish": "2.x.x"

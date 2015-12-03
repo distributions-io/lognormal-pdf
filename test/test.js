@@ -205,7 +205,9 @@ describe( 'distributions-lognormal-pdf', function tests() {
 			expected = new Int8Array( validationData.expected );
 
 		actual = pdf( data, {
-			'dtype': 'int8'
+			'dtype': 'int8',
+			'mu': validationData.mu,
+			'sigma': validationData.sigma
 		});
 
 		assert.notEqual( actual, data );
