@@ -130,7 +130,7 @@ describe( 'distributions-lognormal-pdf', function tests() {
 
 	it( 'should evaluate the Lognormal pdf when provided a plain array', function test() {
 
-		var validationData = require( './json/array.json' ),
+		var validationData = require( './fixtures/array.json' ),
 			data,
 			actual,
 			expected,
@@ -163,7 +163,7 @@ describe( 'distributions-lognormal-pdf', function tests() {
 	});
 
 	it( 'should evaluate the Lognormal pdf when provided a typed array', function test() {
-		var validationData = require( './json/typedarray.json' ),
+		var validationData = require( './fixtures/typedarray.json' ),
 			data,
 			actual,
 			expected,
@@ -199,7 +199,7 @@ describe( 'distributions-lognormal-pdf', function tests() {
 
 	it( 'should evaluate the Lognormal pdf element-wise and return an array of a specific type', function test() {
 
-		var validationData = require( './json/array.json' ),
+		var validationData = require( './fixtures/array.json' ),
 			data = validationData.data,
 			actual,
 			expected = new Int8Array( validationData.expected );
@@ -216,7 +216,7 @@ describe( 'distributions-lognormal-pdf', function tests() {
 	});
 
 	it( 'should evaluate the Lognormal pdf element-wise using an accessor', function test() {
-		var validationData = require( './json/accessor.json' ),
+		var validationData = require( './fixtures/accessor.json' ),
 			data,
 			actual,
 			expected,
@@ -258,7 +258,7 @@ describe( 'distributions-lognormal-pdf', function tests() {
 	});
 
 	it( 'should evaluate the Lognormal pdf element-wise and deep set', function test() {
-		var validationData = require( './json/deepset.json' ),
+		var validationData = require( './fixtures/deepset.json' ),
 			data,
 			actual,
 			expected,
@@ -302,7 +302,7 @@ describe( 'distributions-lognormal-pdf', function tests() {
 	});
 
 	it( 'should evaluate the Lognormal pdf element-wise when provided a matrix', function test() {
-		var validationData = require( './json/matrix.json' ),
+		var validationData = require( './fixtures/matrix.json' ),
 			mat,
 			out,
 			d1,
@@ -335,7 +335,7 @@ describe( 'distributions-lognormal-pdf', function tests() {
 	});
 
 	it( 'should evaluate the Lognormal pdf element-wise and return a matrix of a specific type', function test() {
-		var validationData = require( './json/matrix.json' ),
+		var validationData = require( './fixtures/matrix.json' ),
 			mat,
 			out,
 			d1,

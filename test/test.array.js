@@ -20,7 +20,7 @@ var expect = chai.expect,
 
 describe( 'array pdf', function tests() {
 
-	var validationData = require( './json/array.json' );
+	var validationData = require( './fixtures/array.json' );
 
 	var mu = validationData.mu,
 		sigma = validationData.sigma;

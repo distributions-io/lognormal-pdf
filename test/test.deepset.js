@@ -20,7 +20,7 @@ var expect = chai.expect,
 
 describe( 'deepset pdf', function tests() {
 
-	var validationData = require( './json/deepset.json' ),
+	var validationData = require( './fixtures/deepset.json' ),
 		mu = validationData.mu,
 		sigma = validationData.sigma;
 

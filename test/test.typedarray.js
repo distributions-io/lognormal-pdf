@@ -20,7 +20,7 @@ var expect = chai.expect,
 
 describe( 'typed-array pdf', function tests() {
 
-	var validationData = require( './json/typedarray.json' ),
+	var validationData = require( './fixtures/typedarray.json' ),
 		mu = validationData.mu,
 		sigma = validationData.sigma;
 

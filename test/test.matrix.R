@@ -15,4 +15,4 @@ data = list(
 	expected = y
 )
 
-write( toJSON( data, digits = 16, auto_unbox = TRUE ), "./test/json/matrix.json" )
+write( toJSON( data, digits = 16, auto_unbox = TRUE ), "./test/fixtures/matrix.json" )

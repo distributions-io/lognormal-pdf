@@ -15,4 +15,4 @@ data = list(
 	expected = y
 )
 
-write( toJSON( data, digits = 16, auto_unbox = TRUE ), "./test/json/deepset.json" )
+write( toJSON( data, digits = 16, auto_unbox = TRUE ), "./test/fixtures/deepset.json" )

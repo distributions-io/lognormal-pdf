@@ -23,7 +23,7 @@ var expect = chai.expect,
 
 describe( 'matrix pdf', function tests() {
 
-	var validationData = require( './json/matrix.json' ),
+	var validationData = require( './fixtures/matrix.json' ),
 		mu = validationData.mu,
 		sigma = validationData.sigma,
 		out,
