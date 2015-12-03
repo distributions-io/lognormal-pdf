@@ -1,6 +1,6 @@
 {
   "name": "distributions-lognormal-pdf",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Lognormal distribution probability density function (PDF)",
   "author": {
     "name": "Philipp Burckhardt",
