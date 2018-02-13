@@ -40,7 +40,6 @@
     "url": "https://github.com/distributions-io/lognormal-pdf/issues"
   },
   "dependencies": {
-    "codecov": "^1.0.1",
     "compute-array-constructors": "^1.0.0",
     "dstructs-matrix": "^2.0.0",
     "utils-deep-get": "^1.0.0",
@@ -59,6 +58,7 @@
   },
   "devDependencies": {
     "chai": "3.x.x",
+    "codecov": "^1.0.1",
     "mocha": "2.x.x",
     "istanbul": "^0.3.0",
     "jshint": "2.x.x",
